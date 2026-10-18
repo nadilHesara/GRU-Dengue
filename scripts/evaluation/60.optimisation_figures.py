@@ -1,7 +1,7 @@
 """
 Figures for the baseline's training dynamics and hyperparameter sensitivity.
 
-Trains nothing. Everything is read back from what `scripts/22` wrote, so this
+Trains nothing. Everything is read back from what `scripts/training/59` wrote, so this
 runs in seconds and always draws the committed numbers rather than a fresh
 random seed -- the same arrangement `scripts/19` uses.
 
@@ -18,7 +18,7 @@ what turns "the graph hurts" into a claim that can be checked: if `gcn_gru` and
 comparison was never between two converged models.
 
 Run:
-    python scripts/23.optimisation_figures.py
+    python scripts/evaluation/60.optimisation_figures.py
 
 Outputs:
     results/figures/opt1_training_curves.png
@@ -41,7 +41,7 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 
-PROJECT_DIR = Path(__file__).resolve().parent.parent
+PROJECT_DIR = Path(__file__).resolve().parents[2]
 
 METRICS_PATH = PROJECT_DIR / "results" / "models" / "optimisation_metrics.csv"
 CURVES_PATH = PROJECT_DIR / "results" / "models" / "optimisation_curves.csv"
@@ -62,7 +62,7 @@ GRID = "#e3e2df"
 SURFACE = "#fcfcfb"
 REFERENCE = "#52514e"
 
-# The knobs scripts/22 sweeps, with the axis treatment each one needs and the
+# The knobs scripts/training/59 sweeps, with the axis treatment each one needs and the
 # committed baseline value, which every panel marks so the sweep reads as
 # "what moving this knob costs" rather than as an unanchored curve.
 KNOBS = {
@@ -116,8 +116,8 @@ def load() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
         raise SystemExit(
             "Missing "
             + ", ".join(missing)
-            + ".\nRun scripts/15.evaluate_naive_baselines.py and "
-            "scripts/22.optimise_baseline.py first."
+            + ".\nRun scripts/evaluation/15.evaluate_naive_baselines.py and "
+            "scripts/training/59.optimise_baseline.py first."
         )
 
     return (

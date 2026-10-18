@@ -23,7 +23,7 @@ rerun of any experiment regenerates the figures with the new numbers.
 Output: `figures/*.pdf` (vector, for LaTeX) and `*.png` (for quick viewing).
 
 Usage:
-    python scripts/30.make_paper_figures.py
+    python scripts/evaluation/61.make_paper_figures.py
 """
 
 from __future__ import annotations
@@ -40,7 +40,7 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 
-PROJECT_DIR = Path(__file__).resolve().parent.parent
+PROJECT_DIR = Path(__file__).resolve().parents[2]
 RESULTS_DIR = PROJECT_DIR / "results" / "models"
 FIGURES_DIR = PROJECT_DIR / "figures"
 

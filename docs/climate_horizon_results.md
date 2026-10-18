@@ -12,7 +12,7 @@ from. Paths are relative to `results/climate_horizon/`.
   `f4acdf1c…`, 16:44).
 - **Correction:** `correction_2026-09-30/correction_manifest.json`
   (SHA-256 `5434845f…`, 18:58).
-- **Audit trail:** [`climate_horizon_correction_audit.md`](climate_horizon_correction_audit.md).
+- **Audit trail:** [`archive/climate_horizon_correction_audit.md`](archive/climate_horizon_correction_audit.md).
 - **Corrected tables and figures:** `correction_2026-09-30/analysis/`,
   produced by `scripts/evaluation/49.climate_horizon_analysis.py --correction`.
 

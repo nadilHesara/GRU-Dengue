@@ -12,7 +12,7 @@
 >   `climate_delta` was in the weighted group. That was an implementation
 >   error.
 > - **Current results:** [`climate_horizon_results.md`](climate_horizon_results.md).
-> - **Audit trail:** [`climate_horizon_correction_audit.md`](climate_horizon_correction_audit.md).
+> - **Audit trail:** [`archive/climate_horizon_correction_audit.md`](archive/climate_horizon_correction_audit.md).
 >   The v1 results in §15–18 are history.
 
 Status: **frozen protocol fully executed (§17 retrospective, §18 2026 hold-out). Primary: no measurable difference.** New outputs go only to `results/climate_horizon/`. Nothing has been trained for this
@@ -40,8 +40,8 @@ strength.
 | `AGENTS.md` / `CLAUDE.md` | **None in the repository** (only one inside `.venv/…/xarray`, which is not ours). |
 | [`CONTRIBUTING.md`](../CONTRIBUTING.md) | Reusable code goes in `src/`. Executable entry points go in `scripts/`. Data stays in `data/`, results in `results/`, models in `models/`. Scripts stay thin. Tests are added or updated with every model or data change. Conventional-commit messages. Run `python -m pytest tests` before a PR. |
 | [`docs/workflow.md`](workflow.md) | Numbered script prefixes record chronology. Scripts import from `src/`; they do not import each other's private helpers. |
-| [`README.md`](../README.md) §6–§10 | Reporting conventions: headline = folds 1, 2, 3, 6, 7, 8, 9; folds 4 and 5 (COVID) reported separately; 3 seeds; the evidence bar is "≥ 2 seed-sd and p < 0.05 paired over folds"; always decompose by fold 1 (2017), because five earlier "gains" came entirely from that fold. |
-| [`docs/revision_2026_09_30.md`](revision_2026_09_30.md) | The current benchmark protocol: common cells; per-cell split purge for shared multi-horizon models; Holm over a declared primary family; 4-week block bootstrap; seed-mean and seed-ensemble estimands kept separate; 2026 hold-out declared in advance. |
+| [`research_log.md`](research_log.md) §6–§10 | Reporting conventions: headline = folds 1, 2, 3, 6, 7, 8, 9; folds 4 and 5 (COVID) reported separately; 3 seeds; the evidence bar is "≥ 2 seed-sd and p < 0.05 paired over folds"; always decompose by fold 1 (2017), because five earlier "gains" came entirely from that fold. |
+| [`docs/archive/revision_2026_09_30.md`](archive/revision_2026_09_30.md) | The current benchmark protocol: common cells; per-cell split purge for shared multi-horizon models; Holm over a declared primary family; 4-week block bootstrap; seed-mean and seed-ensemble estimands kept separate; 2026 hold-out declared in advance. |
 | [`results/benchmark/holdout_declaration.md`](../results/benchmark/holdout_declaration.md) | 2026 (fold 10) was frozen on 29 Sep 2026. New models may only be added in **a dated section at the end, written before they are scored on 2026**. |
 | CS3631 project brief | GRU/LSTM/Transformer baseline required. No LLM, agentic or large-foundation-model methods in the proposed model. Must train on free or personal hardware. Paper needs ablations, a comparison with existing methods, hyperparameter tuning and a computational analysis. |
 
@@ -84,7 +84,7 @@ trained now.
 | --- | --- | --- |
 | `GCNGRU` | [`src/models/stgnn.py:11`](../src/models/stgnn.py#L11) | Per step: `relu(A·X·W)` graph convolution (2 layers), then one GRU shared across districts (`batch*nodes` sequences), then dropout, then a linear head on the last state. Defaults: hidden 32, 2 GCN layers, dropout 0.2. |
 | `GraphConv` | [`src/models/gnn.py:9`](../src/models/gnn.py#L9) | Dense `einsum("ij,bljf->blif")`. |
-| Identity backbone ("GRU-only") | adjacency = `np.eye(25)` | With the identity matrix the graph layers become per-node MLPs. Every positive result so far uses this backbone. The contiguity and learned graphs cost MAE at every horizon (README §8e; `results/benchmark/tables/ablations.csv`: contiguity +1.2 to +3.8, learned +0.5 to +5.6 at h = 1–4). **The new model uses no graph.** |
+| Identity backbone ("GRU-only") | adjacency = `np.eye(25)` | With the identity matrix the graph layers become per-node MLPs. Every positive result so far uses this backbone. The contiguity and learned graphs cost MAE at every horizon (research log §8e; `results/benchmark/tables/ablations.csv`: contiguity +1.2 to +3.8, learned +0.5 to +5.6 at h = 1–4). **The new model uses no graph.** |
 | `MultiHorizonGCNGRU` | [`src/models/multi_horizon.py:144`](../src/models/multi_horizon.py#L144) | One shared trunk with one `Linear(hidden, 1)` per horizon. The backbone's own head is replaced with `nn.Identity`. |
 | `make_multi_horizon_windows` | [`src/models/multi_horizon.py:67`](../src/models/multi_horizon.py#L67) | Every horizon on the same origins. Split assigned by the **longest** horizon (script 27). The benchmark replaced this with the per-cell rule in §3.5. |
 | Baseline training loop | [`scripts/training/16.train_gcn_gru.py:293`](../scripts/training/16.train_gcn_gru.py#L293) `train_one` | Adam (lr 3e-3, wd 1e-4), batch 64, max 150 epochs, patience 15 on validation loss, `clip_grad_norm_(…, 1.0)`, best-state restore, seeded `randperm`. Hooks: `build_model`, `make_optimiser`, `make_scheduler`. |
@@ -97,10 +97,10 @@ trained now.
 | `LearnableLagEncoder` | [`src/models/lag_encoder.py:65`](../src/models/lag_encoder.py#L65) | Per district i and climate feature k: kernel `w[i,k,τ] = Σ_b α[i,k,b]·basis_b(τ)` over reach `L = 26` periods, with 6 Gaussian bumps (initial centres 0, 4, 8, 13, 18, 24; width `softplus + 0.5`). `α = simplex(node_embedding[i] · feature_projection[k])`, embedding dimension 8. About 550 parameters. Rows sum to 1 and are non-negative. |
 | Causality | `forward`, [`lag_encoder.py:165`](../src/models/lag_encoder.py#L165) | Input `[B, T, N, K]` gives `[B, T−L+1, N, K]` via `unfold` and a flipped kernel (τ = 0 is the most recent step). The origin step only sees τ ≥ 0. |
 | Readouts | `kernels()`, `peak_lags()` (centre of mass) | These give the interpretable output ("district i responds to rainfall after about 8 weeks"). |
-| Activation | `activation="softmax"` default; [`src/models/simplex_activations.py`](../src/models/simplex_activations.py) | `sparsemax` and bare `entmax15` collapse 58–74% of kernels into a zero-gradient state (README §8b). **Keep softmax** (control). `floored_entmax15` is the only sparse alternative that is safe to use. |
+| Activation | `activation="softmax"` default; [`src/models/simplex_activations.py`](../src/models/simplex_activations.py) | `sparsemax` and bare `entmax15` collapse 58–74% of kernels into a zero-gradient state (research log §8b). **Keep softmax** (control). `floored_entmax15` is the only sparse alternative that is safe to use. |
 | `LagGCNGRU` | [`lag_encoder.py:185`](../src/models/lag_encoder.py#L185) | Replaces the climate channels with smoothed versions in place, inside **one** backbone. It has no separate branches, so it cannot route gradients per horizon. The new model reuses the encoder, not this wrapper. |
 | Training script | [`scripts/training/18.train_lag_gcn_gru.py`](../scripts/training/18.train_lag_gcn_gru.py) | Window = 12 + 26 − 1 = **37** periods. Kernel LR 2e-2. `LAGGED_FEATURES` = the 7 instantaneous climate channels. Writes `learned_lags.csv` (per fold, seed, district, feature and lag). |
-| Known result | README §7; short paper §4.2 | Trained end to end at h = 1 it loses: 20.67 MAE vs 18.36 with hand windows and 18.07 with none (GEE climate, single seed). Learned vs measured delay r = −0.16 (another configuration gives +0.36; README §8b). Diagnosis: at h = 1 the gradient carries almost no delay information. **The new method responds directly to this diagnosis.** |
+| Known result | research log §7; short paper §4.2 | Trained end to end at h = 1 it loses: 20.67 MAE vs 18.36 with hand windows and 18.07 with none (GEE climate, single seed). Learned vs measured delay r = −0.16 (another configuration gives +0.36; research log §8b). Diagnosis: at h = 1 the gradient carries almost no delay information. **The new method responds directly to this diagnosis.** |
 | Measured delays | [`scripts/evaluation/17.lag_correlation_scan.py`](../scripts/evaluation/17.lag_correlation_scan.py) | Per-district cross-correlation, fitted before each test year. Rainfall delay 5–10 weeks, median 8. The script itself warns that the deseasonalised rainfall peak correlation (+0.036) is below its resolvability threshold of 0.10. **Its outputs (`results/eda/lag_correlation.csv`) are not on disk** and must be regenerated on the current climate file. |
 
 ### 3.3 Negative Binomial implementation (the newer head)
@@ -240,9 +240,9 @@ Per-cell predictions for all of these are in
 `results/benchmark/predictions/*.parquet`. **Reuse them as external
 references on common cells. Do not retrain.**
 
-### 4.2 Only in the short paper / README (GEE climate; not on disk)
+### 4.2 Only in the short paper / research log (GEE climate; not on disk)
 
-Tables 1–5 of `docs/short paper.pdf` and README §6–§8h (identity separate
+Tables 1–5 of the short paper and research log §6–§8h (identity separate
 h = 4 skill +10.8%, p = 0.0068; shuffle cost +1.55 at h = 4, p = 0.016;
 learnable-lag h = 1 failure). The metric CSVs in `results/models/` are no
 longer on disk. Only `adjacency_report.md`, `folds_report.md` and
@@ -1542,7 +1542,7 @@ step-4 specification. It is fixed in routing v2: only the lag encoder and
 the climate GRU are weighted, and every prediction head is unweighted.
 
 Details, tests and the smoke check are in
-[`climate_horizon_correction_audit.md`](climate_horizon_correction_audit.md)
+[`archive/climate_horizon_correction_audit.md`](archive/climate_horizon_correction_audit.md)
 §7. All §15–18 results were produced under v1. Corrected reruns are
 **[PENDING]**.
 

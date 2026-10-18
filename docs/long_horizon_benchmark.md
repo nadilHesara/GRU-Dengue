@@ -57,7 +57,7 @@ still has it (all scripts pick it up unchanged).
   (a year no model trained on): conformal intervals, stacking weights, ensemble
   member selection, early-warning alarm cutoffs. Chronos fine-tuning steps were
   chosen once on fold 0's validation year (2015).
-- Statistics as in the README: paired t over the 7 headline folds, plus Wilcoxon
+- Statistics as in the research log: paired t over the 7 headline folds, plus Wilcoxon
   and fold win counts. 3 seeds for every trained model.
 
 ## Methods (17 forecasters + 4 naive + 3 ensembles)
@@ -65,7 +65,7 @@ still has it (all scripts pick it up unchanged).
 | Family | Arms |
 | --- | --- |
 | Naive | persistence, seasonal naive, 5-year climatology, seasonal persistence |
-| GRU (identity backbone) | `gru_v1` (the short paper's model), `gru_v2` (+outbreak history), `gru_v2_shuffled` (climate time-shuffled), `gru_v2_quantile` (7-quantile pinball head), `gru_v2_lw` / `gru_v2_quantile_lw` (level-weighted loss, README §8), `gcn_v2` (contiguity graph), `adaptive_v2` (learned graph, LR selected on validation) |
+| GRU (identity backbone) | `gru_v1` (the short paper's model), `gru_v2` (+outbreak history), `gru_v2_shuffled` (climate time-shuffled), `gru_v2_quantile` (7-quantile pinball head), `gru_v2_lw` / `gru_v2_quantile_lw` (level-weighted loss, research log §8), `gcn_v2` (contiguity graph), `adaptive_v2` (learned graph, LR selected on validation) |
 | Tabular | `lgbm_v2`, `lgbm_v2_noclimate`, `ridge_v2` (linear ARX) — case lags, climate lags to 24 weeks, neighbour and national signals, target-week season |
 | Foundation (zero-shot) | `chronos_bolt`, `chronos2`, `chronos2_climate` (past climate + known season as covariates), `chronos2_joint` (all 25 districts as one multivariate series) |
 | Foundation (fine-tuned) | `chronos2_ft`, `chronos2_joint_ft` — LoRA per fold on data up to train_end only |
@@ -157,7 +157,7 @@ h=2, 3, 12.
 | 8 | +0.25 | +1.61 |
 | 12 | +0.68 | +1.27 |
 
-The README §9 item 1 question is answered: **neither graph helps at any
+The research log §9 item 1 question is answered: **neither graph helps at any
 horizon**. The contiguity penalty shrinks with horizon (from +3.8 to +0.3) but
 never turns into a gain. Cross-district information *does* help in a different
 form: Chronos-2's joint 25-district mode beats univariate at every horizon

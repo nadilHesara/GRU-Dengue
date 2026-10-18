@@ -12,7 +12,7 @@ Writes results/climate_horizon/correction_2026-09-30/evaluation_audit/:
   reference_comparability.csv  data fingerprints and training rules of stored baselines
 
 The v1-routing predictions are used as they stand: this audits the analysis,
-not the routing (see docs/climate_horizon_correction_audit.md).
+not the routing (see docs/archive/climate_horizon_correction_audit.md).
 """
 
 from __future__ import annotations

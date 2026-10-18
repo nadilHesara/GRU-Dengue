@@ -53,7 +53,7 @@ Outputs:
     results/figures/opt4_schedule_effect.png
 
 The figures are generated automatically at the end of this script by the
-plotting functions in `scripts/23.optimisation_figures.py`. Run that script
+plotting functions in `scripts/evaluation/60.optimisation_figures.py`. Run that script
 alone to redraw figures from existing artifacts, or pass `--skip-figures` when
 running a partial optimization stage.
 """
@@ -72,7 +72,7 @@ import pandas as pd
 import torch
 
 
-PROJECT_DIR = Path(__file__).resolve().parent.parent
+PROJECT_DIR = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_DIR))
 
 RESULTS_DIR = PROJECT_DIR / "results" / "models"
@@ -140,7 +140,7 @@ def load_baseline():
     """Load scripts/16 and wire up everything it depends on."""
 
     spec = importlib.util.spec_from_file_location(
-        "baseline", PROJECT_DIR / "scripts" / "16.train_gcn_gru.py"
+        "baseline", PROJECT_DIR / "scripts" / "training" / "16.train_gcn_gru.py"
     )
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -153,7 +153,7 @@ def load_figure_generator():
     """Load the plotting module without importing a non-identifier filename."""
 
     spec = importlib.util.spec_from_file_location(
-        "optimisation_figures", PROJECT_DIR / "scripts" / "23.optimisation_figures.py"
+        "optimisation_figures", PROJECT_DIR / "scripts" / "evaluation" / "60.optimisation_figures.py"
     )
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)

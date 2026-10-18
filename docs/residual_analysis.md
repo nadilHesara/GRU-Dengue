@@ -194,7 +194,7 @@ feature, any driver proxy, and any autocorrelation lag.
 (lags 1-3, all p<0.01), rising to **+0.67 at lag 1 for h=4** (p<0.001). The
 model's error this period predicts its error next period, and that gets
 *worse*, not better, at the longer horizon where the model otherwise has real
-skill (README §8f). The temporal signal is not fully extracted.
+skill (research log §8f). The temporal signal is not fully extracted.
 
 **B. Feature-level.** `cases_log1p` at the origin dominates (r=+0.42 on
 |residual| at h=1, +0.39 at h=4) — the model errs more on districts that are
@@ -220,7 +220,7 @@ signed residual). This is a genuinely different finding from part B's
 centroid_lat/lon correlations (~0.12-0.14): centroid position is a fixed
 property of a district, constant over time, while this is same-week error
 co-movement between adjacent districts — real, current spillover that the
-model is not capturing. Given README §8e's finding that the queen-contiguity
+model is not capturing. Given research log §8e's finding that the queen-contiguity
 graph *hurts* accuracy at every horizon tested (h=1-4, identity beats it
 everywhere), this is a genuine tension: the graph that hurts accuracy sits on
 exactly the relation whose *errors* are the most correlated of anything

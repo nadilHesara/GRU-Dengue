@@ -148,13 +148,13 @@ an improvement, for two independent reasons.**
 ranged 96–117%, ex-fold-1 movement ±0.03 MAE. A paired t-test over folds gives
 **t = +1.05**, nowhere near significance at seven folds.
 
-This is precisely the shape README §8 records for the loss work, where
+This is precisely the shape research log §8 records for the loss work, where
 `level_weighted` also cleared the seed sd and also turned out to be 100.1% one
 fold. `scripts/22` now performs this decomposition itself and prints it directly
 beneath the seed-sd verdict, because the seed-sd test on its own has now been
 misleading twice in this repository.
 
-**And it is the expected result.** README §7 established that at horizon 1 the
+**And it is the expected result.** Research log §7 established that at horizon 1 the
 previous period's case count carries nearly all the forecasting signal —
 dropping every climate channel costs about +0.01 MAE. No change to how the
 climate channels are *smoothed* can move a headline that climate barely enters.
@@ -189,7 +189,7 @@ Two things are worth noting rather than claiming:
   not a contradiction, but it does mean **−0.16 should not be quoted as the
   softmax encoder's delay-recovery number** without stating those conditions.
 - The `gcn_gru` column collapses to near zero for every arm. The graph, which
-  §6 of the README shows measurably hurts, appears to destroy delay recovery as
+  §6 of the research log shows measurably hurts, appears to destroy delay recovery as
   well — consistent with the contiguity graph mixing districts whose delays
   differ.
 
@@ -211,7 +211,7 @@ number, whichever direction it points.
 
 ## 7. Horizon 4 — the follow-up, and where a signal would live
 
-README §9 (and §5's list here) singled out horizon 4 as the one condition that
+Research log §9 (and §5's list here) singled out horizon 4 as the one condition that
 could give the activation something to bite on: at h = 1 the forecast origin
 carries nearly all the signal, but at h = 4 the measured 5–10 week rainfall
 delay should become load-bearing. The same 9-fold × 3-seed × 2-backbone sweep
@@ -336,7 +336,7 @@ Tests: `tests/test_simplex_activations.py` (43) and
 3. **`floored_entmax15` for a concentrated kernel where the regime is unknown** —
    it removes the §4 dead end. But it is *not* a universal upgrade: it is the
    worst arm on `gru_only` at h = 4, where hard concentration happens to help.
-4. **Whatever the graph work in README §9 concludes, re-check delay recovery on
+4. **Whatever the graph work in research log §9 concludes, re-check delay recovery on
    it.** Every activation's delay signal collapses to zero on `gcn_gru` at both
    horizons; a better graph might restore it, or might not, and that is cheap to
    measure once a candidate graph exists.

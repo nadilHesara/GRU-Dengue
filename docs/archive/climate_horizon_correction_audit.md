@@ -32,7 +32,7 @@ changed, and `results/benchmark/` and the frozen manifest were not touched.
 ## 2. What the code actually did
 
 **Grouping.** `ClimateHorizonNB.climate_parameters()`
-([src/models/climate_horizon.py:157-161](../src/models/climate_horizon.py#L157-L161))
+([src/models/climate_horizon.py:157-161](../../src/models/climate_horizon.py#L157-L161))
 returns
 
 ```python
@@ -40,26 +40,26 @@ returns
 ```
 
 `self.climate_delta` is the climate correction head, `nn.Linear(16, 4)`
-([:146](../src/models/climate_horizon.py#L146)).
+([:146](../../src/models/climate_horizon.py#L146)).
 `other_parameters()` is everything else
-([:163-167](../src/models/climate_horizon.py#L163-L167)).
+([:163-167](../../src/models/climate_horizon.py#L163-L167)).
 
 **Gradients**
-([src/training/climate_weighting.py:84-96](../src/training/climate_weighting.py#L84-L96)):
+([src/training/climate_weighting.py:84-96](../../src/training/climate_weighting.py#L84-L96)):
 - `torch.autograd.grad(loss_climate, climate_parameters)` for the climate
   group, where L_climate = Σ a_h w_h L_h / Σ a_h w_h;
 - `torch.autograd.grad(loss_equal, other_parameters)` for the rest.
 
 Each gradient is assigned once
-([:122](../src/training/climate_weighting.py#L122)). One global-norm clip
-over all parameters follows ([:123](../src/training/climate_weighting.py#L123)),
-then one Adam step ([:129](../src/training/climate_weighting.py#L129)).
+([:122](../../src/training/climate_weighting.py#L122)). One global-norm clip
+over all parameters follows ([:123](../../src/training/climate_weighting.py#L123)),
+then one Adam step ([:129](../../src/training/climate_weighting.py#L129)).
 The backward-only `_GradScale` router
-([src/models/climate_horizon.py:195](../src/models/climate_horizon.py#L195))
+([src/models/climate_horizon.py:195](../../src/models/climate_horizon.py#L195))
 is fixed at weight 1 and has no effect.
 
 **Optimiser**
-([src/training/climate_horizon.py:76-83](../src/training/climate_horizon.py#L76-L83)):
+([src/training/climate_horizon.py:76-83](../../src/training/climate_horizon.py#L76-L83)):
 - the lag encoder gets lr 2e-2 with no weight decay;
 - every other parameter gets lr 3e-3 with weight decay 1e-4.
 
@@ -107,7 +107,7 @@ Every parameter is in exactly one group (tested in
   specification put "output heads" in group 2 ("all other parameters,
   including case GRU, gate and output heads"). The code put the climate
   output head in group 1
-  ([src/models/climate_horizon.py:160-161](../src/models/climate_horizon.py#L160-L161)).
+  ([src/models/climate_horizon.py:160-161](../../src/models/climate_horizon.py#L160-L161)).
 - **Documentation error.** The docs describe the implemented grouping as
   if it were the method, without flagging that it departs from the
   specification:
@@ -210,7 +210,7 @@ manifest.
 
 **Code change (smallest possible).**
 - `ClimateHorizonNB.climate_parameters()` now returns only `encoder.*` and
-  `climate_gru.*` ([src/models/climate_horizon.py](../src/models/climate_horizon.py)).
+  `climate_gru.*` ([src/models/climate_horizon.py](../../src/models/climate_horizon.py)).
 - `climate_delta` moved to `other_parameters()`, so it now receives the
   unweighted L_equal like every other prediction head.
 - A constant `ROUTING_VERSION = "v2-heads-unweighted"` records the fix;

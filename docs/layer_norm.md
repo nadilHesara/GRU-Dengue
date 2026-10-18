@@ -81,7 +81,7 @@ Per-fold Δ (negative = normalisation better):
 | 9 | 2025 | +0.04 | +0.12 | +0.20 | +0.10 |
 
 This is the fifth change in this project to produce a headline movement that is
-the 2017 epidemic fold and nothing else (README §8, §8b, §8c, §8d, and now this).
+the 2017 epidemic fold and nothing else (research log §8, §8b, §8c, §8d, and now this).
 Averaged over the other six headline folds the change is between −0.02 and −0.31
 MAE — smaller than the seed spread. No paired test clears p = 0.05 at any
 horizon, and the sign is not even consistent fold to fold.

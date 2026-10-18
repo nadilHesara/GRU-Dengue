@@ -60,10 +60,10 @@ objective and the metrics -- is imported from `scripts/16.train_gcn_gru.py`.
 
 Usage:
 
-    python scripts/29.train_climate_ablation.py                    3 arms, h=1-4, 9 folds, 3 seeds
-    python scripts/29.train_climate_ablation.py --folds 8 --seeds 1  smoke run
-    python scripts/29.train_climate_ablation.py --horizons 4
-    python scripts/29.train_climate_ablation.py --model contiguity
+    python scripts/training/29.train_climate_ablation.py                    3 arms, h=1-4, 9 folds, 3 seeds
+    python scripts/training/29.train_climate_ablation.py --folds 8 --seeds 1  smoke run
+    python scripts/training/29.train_climate_ablation.py --horizons 4
+    python scripts/training/29.train_climate_ablation.py --model contiguity
 
 Outputs:
     results/models/climate_ablation_report.md
@@ -740,7 +740,7 @@ def write_report(
         "## Reproducing",
         "",
         "```bash",
-        "python scripts/29.train_climate_ablation.py \\",
+        "python scripts/training/29.train_climate_ablation.py \\",
         f"    --model {model_name} --variant {variant} \\",
         f"    --horizons {' '.join(str(h) for h in horizons)} "
         f"--seeds {config['seeds']}",

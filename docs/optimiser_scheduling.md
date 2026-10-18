@@ -125,7 +125,7 @@ fold-1 share is 147% — meaning the non-epidemic folds moved *the wrong way*
 (+0.045) and fold 1 alone carried it.
 
 This is the fourth time in this repository that a change has produced a headline
-movement which turns out to be the 2017 epidemic fold and nothing else (README
+movement which turns out to be the 2017 epidemic fold and nothing else (research log
 §8, §8b, §8c). The pattern is now well enough established to be a prior: on this
 data at horizon 1, a training-procedure change that moves the headline is moving
 fold 1.

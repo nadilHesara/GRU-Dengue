@@ -53,7 +53,7 @@ the only steps that need network access, credentials and manual Google Drive
 downloads, and they take hours to days of wall-clock time waiting on Earth
 Engine exports.
 
-Set up Earth Engine first — see [`README.md`](../README.md) for the full
+Set up Earth Engine first — see [`research_log.md`](research_log.md#weather-data-setup-earth-engine-in-full) for the full
 account, project registration and `earthengine authenticate` walkthrough. Then:
 
 ```powershell
@@ -239,7 +239,7 @@ About 90 minutes, nearly all of it in the two training sweeps. Add
 
 ## Related documents
 
-- [`README.md`](../README.md) — Earth Engine setup in full
+- [`research_log.md`](research_log.md#weather-data-setup-earth-engine-in-full) — Earth Engine setup in full
 - [`docs/model_tensors.md`](model_tensors.md) — what stage 3 builds
 - [`docs/baseline.md`](baseline.md) — the baseline and its results
 - [`docs/improvements.md`](improvements.md) — the objective changes
