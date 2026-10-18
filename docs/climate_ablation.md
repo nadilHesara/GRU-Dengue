@@ -1,12 +1,12 @@
 # Climate ablation — is climate what causes the h=3–4 skill?
 
-`scripts/29.train_climate_ablation.py`, `src/models/climate_ablation.py`,
+`scripts/training/29.train_climate_ablation.py`, `src/models/climate_ablation.py`,
 `tests/test_climate_ablation.py`. Report:
 `results/models/climate_ablation_report.md`.
 
 ## The question
 
-README §8f established the first real improvement in this project: at h=3 and
+The research log §8f established the first real improvement in this project: at h=3 and
 h=4 the model beats same-horizon persistence on MAE *and* on peak MAE, 7/7 folds
 at h=4, p < 0.01, not the 2017 artefact. It attributed that to the measured
 5–10 week rainfall-to-dengue delay (`scripts/17`) — as the horizon grows, the
@@ -173,8 +173,8 @@ own would have supported the opposite conclusion.
 ## Reproducing
 
 ```bash
-python scripts/29.train_climate_ablation.py                     # h=1–4, 3 arms, 9 folds, 3 seeds
-python scripts/29.train_climate_ablation.py --horizons 4        # h=4 only
-python scripts/29.train_climate_ablation.py --model contiguity  # the harmful graph
+python scripts/training/29.train_climate_ablation.py                     # h=1–4, 3 arms, 9 folds, 3 seeds
+python scripts/training/29.train_climate_ablation.py --horizons 4        # h=4 only
+python scripts/training/29.train_climate_ablation.py --model contiguity  # the harmful graph
 python -m pytest tests/test_climate_ablation.py
 ```

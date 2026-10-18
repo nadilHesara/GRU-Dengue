@@ -1,7 +1,7 @@
 # Gradient clipping on the current model
 
 Whether clipping the global gradient norm before every `optimiser.step()` makes
-the multi-horizon Negative Binomial model (README §8i) train more stably or
+the multi-horizon Negative Binomial model (research log §8i) train more stably or
 forecast better, and whether it has exploding gradients to prevent in the first
 place.
 
@@ -187,6 +187,6 @@ conditioning that shows up as reproducibility rather than accuracy. It rests on
   becomes the bottleneck, a 5–10 seed run of `no_clip` versus `clip_0.25`
   (`--max-norms none 0.25 --seeds 10`, ~75 min) would settle it.
 
-This agrees with the standing explanation in README §6–§8h: the optimiser is
+This agrees with the standing explanation in research log §6–§8h: the optimiser is
 not what limits this model. The ceiling is set by the information in the
 inputs.

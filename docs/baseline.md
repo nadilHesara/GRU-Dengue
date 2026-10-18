@@ -170,7 +170,7 @@ Per fold, MAE, averaged over 3 seeds:
 
 3. **Hand-specified climate lags are worth negative value.** On the better
    backbone, v0 (16.67) beats v1 (17.12); the same ordering holds on fold 1 by
-   4.3 MAE. So `v1 - v0`, the number `docs/learnable_lags.md` set as the target
+   4.3 MAE. So `v1 - v0`, the number `docs/archive/learnable_lags.md` set as the target
    for a learnable lag module, is **negative**. The module was benchmarked
    against a baseline that was itself worse than doing nothing.
 

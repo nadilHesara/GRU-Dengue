@@ -150,7 +150,7 @@ Retrained with 3 seeds on all nine folds, scored on the test split.
 | Model | Headline MAE | Headline peak MAE | 2017 MAE | Seed sd |
 |---|---|---|---|---|
 | persistence | **16.42** | **26.61** | **36.08** | — |
-| `gru_only` v1 (README headline best) | 16.68 | 28.06 | 42.97 | — |
+| `gru_only` v1 (research log headline best) | 16.68 | 28.06 | 42.97 | — |
 | **tuned `gcn_gru` v1** | 18.23 | 29.22 | 49.54 | 0.42 |
 | baseline `gcn_gru` v1 (script 16 defaults) | 18.98 | 30.36 | 54.81 | 0.68 |
 | baseline `gcn_gru` v0 | 18.60 | 29.81 | 51.87 | 0.30 |
@@ -176,14 +176,14 @@ Retrained with 3 seeds on all nine folds, scored on the test split.
 **1. The like-for-like gain is inside the noise.** Headline MAE moves from 18.98
 to 18.23, **−0.75 (−4.0%)**, against the tuned model's seed sd of 0.42. That is
 under two seed-sd. This project applies the same rule to §6, §8 and §8b of the
-README — *read the seed sd before believing a gap* — and by that rule −0.75 is
+research log — *read the seed sd before believing a gap* — and by that rule −0.75 is
 not a result. It points the right way; it does not clear the bar.
 
 **2. The entire gain is one fold.** Fold 1 (2017) contributes −5.27 of the
 −0.75·7 = −5.25 total headline movement. Averaged over the other six headline
 folds the change is **−0.02 MAE**, with individual folds moving between −0.37 and
 +0.26 — i.e. nothing. This is the identical single-fold shape that
-[`improvements.md`](improvements.md) and the README's §8b record for the loss and
+[`improvements.md`](improvements.md) and the research log's §8b record for the loss and
 activation work: whatever helps on this data helps on the 2017 epidemic and is
 invisible everywhere else, because the epidemic fold is the only one where the
 case distribution is wide enough for the model's weaknesses to show.
@@ -232,13 +232,13 @@ That is what a flat surface with seed noise on top looks like.
 
 ## 7. What would change this answer
 
-- **A longer horizon.** The README's §9 item 2 and §8b both argue climate — and
+- **A longer horizon.** The research log's §9 item 2 and §8b both argue climate — and
   with it lookback, GRU depth, and the lag machinery — should become
   load-bearing at h = 2–4, where the forecast origin no longer dominates. The
   search is `--horizon`-agnostic in principle but pinned to h=1 here; rerunning
   it at h=4 is the obvious next use of the script.
 - **A backbone that isn't handicapped.** Tuning `gru_only`, or a `gcn_gru` on
-  `A_gaussian` instead of contiguity (README §9 item 1), would at least be
+  `A_gaussian` instead of contiguity (research log §9 item 1), would at least be
   tuning something that isn't starting from behind. The script takes `--variant`
   but always uses the real adjacency for the `gcn_gru` it scores; a `gru_only`
   or alternate-graph mode would be a small extension.

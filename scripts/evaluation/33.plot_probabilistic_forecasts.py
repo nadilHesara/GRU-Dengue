@@ -6,7 +6,6 @@ Plots observed case counts, predicted mean, and shaded 80% prediction intervals
 Output:
     figures/fig_probabilistic_forecast.pdf
     figures/fig_probabilistic_forecast.png
-    images/fig_probabilistic_forecast.png
 
 Usage:
     python scripts/evaluation/33.plot_probabilistic_forecasts.py
@@ -38,7 +37,6 @@ from src.models.stgnn import GCNGRU
 
 PROCESSED_DIR = PROJECT_DIR / "data" / "processed"
 FIGURES_DIR = PROJECT_DIR / "figures"
-IMAGES_DIR = PROJECT_DIR / "images"
 FOLDS_PATH = PROCESSED_DIR / "folds.json"
 ADJACENCY_PATH = PROCESSED_DIR / "adjacency.npz"
 
@@ -169,19 +167,16 @@ def main():
     axes[0].legend(loc="upper left", frameon=False, fontsize=6.5)
 
     FIGURES_DIR.mkdir(parents=True, exist_ok=True)
-    IMAGES_DIR.mkdir(parents=True, exist_ok=True)
 
     fig.tight_layout()
     pdf_path = FIGURES_DIR / "fig_probabilistic_forecast.pdf"
     png_path = FIGURES_DIR / "fig_probabilistic_forecast.png"
-    img_png_path = IMAGES_DIR / "fig_probabilistic_forecast.png"
 
     fig.savefig(pdf_path)
     fig.savefig(png_path)
-    fig.savefig(img_png_path)
     plt.close(fig)
 
-    print(f"Saved figures to:\n  {pdf_path}\n  {png_path}\n  {img_png_path}")
+    print(f"Saved figures to:\n  {pdf_path}\n  {png_path}")
 
 
 if __name__ == "__main__":

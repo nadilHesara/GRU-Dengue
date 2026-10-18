@@ -145,7 +145,7 @@ gain on fold 1 (−2.28) paid for by small losses on five of the other six
 MAE — worse than no graph at all.**
 
 This is the fifth consecutive change in this project whose headline movement is
-the 2017 epidemic fold and nothing else (README §8, §8b, §8c, §8d). At this point
+the 2017 epidemic fold and nothing else (research log §8, §8b, §8c, §8d). At this point
 the pattern is a prior, not a coincidence.
 
 ### The one genuinely new thing: fold 1
